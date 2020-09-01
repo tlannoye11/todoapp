@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 
-const baseUrl: string = "https://localhost:4000";
+const baseUrl: string = "http://localhost:4000";
 
 export const getTodos = async (): Promise<AxiosResponse<ApiDataType>> => {
     try {
@@ -11,6 +11,7 @@ export const getTodos = async (): Promise<AxiosResponse<ApiDataType>> => {
         return todos;
     }
     catch (error) {
+        console.log("Client error = ", error);
         throw new Error(error);
     }
 }
@@ -24,15 +25,16 @@ export const addTodo = async (
             description: formData.description,
             status: false,
         }
-
+        console.log("Trying to add this:",todo);
         const saveTodo: AxiosResponse<ApiDataType> = await axios.post(
             baseUrl + "/add-todo",
             todo
         )
-
+        console.log("ADDED!");
         return saveTodo;
     }
     catch (error) {
+        console.log("Add error:",error);
         throw new Error(error);
     }
 }
